@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A personal dashboard to organize and track job applications.">
+  <title>CareerTrack | Job Application Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <a href="#" class="brand">
+        <span class="brand-icon">C</span>
+        <span>CareerTrack</span>
+      </a>
+
+      <p class="sidebar-label">WORKSPACE</p>
+      <nav class="navigation">
+        <a href="#dashboard" class="nav-link active">
+          <span>▦</span> Dashboard
+        </a>
+        <a href="#applications" class="nav-link">
+          <span>▤</span> My Applications
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="profile-avatar">JD</div>
+        <div>
+          <strong>Job Seeker</strong>
+          <p>Personal workspace</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">YOUR CAREER WORKSPACE</p>
+          <h1>Job Dashboard</h1>
+        </div>
+        <button class="primary-button" id="open-form-btn">
+          <span>+</span> Add application
+        </button>
+      </header>
+
+      <section class="welcome-banner">
+        <div>
+          <p class="banner-label">YOUR NEXT OPPORTUNITY STARTS HERE</p>
+          <h2>Keep moving forward. ✨</h2>
+          <p>Organize your applications and stay on top of your job search.</p>
+        </div>
+        <div class="banner-art" aria-hidden="true">🚀</div>
+      </section>
+
+      <section class="stats-grid" id="dashboard" aria-label="Application statistics">
+        <article class="stat-card">
+          <div class="stat-heading">
+            <span>Total applications</span>
+            <span class="stat-icon purple">▤</span>
+          </div>
+          <p class="stat-number" id="total-count">0</p>
+          <p class="stat-description">All tracked applications</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-heading">
+            <span>Interviews</span>
+            <span class="stat-icon blue">◉</span>
+          </div>
+          <p class="stat-number" id="interview-count">0</p>
+          <p class="stat-description">Interview opportunities</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-heading">
+            <span>Offers</span>
+            <span class="stat-icon green">✓</span>
+          </div>
+          <p class="stat-number" id="offer-count">0</p>
+          <p class="stat-description">Offers received</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-heading">
+            <span>Rejected</span>
+            <span class="stat-icon red">↗</span>
+          </div>
+          <p class="stat-number" id="rejected-count">0</p>
+          <p class="stat-description">Applications closed</p>
+        </article>
+      </section>
+
+      <section class="applications-section" id="applications">
+        <div class="section-heading">
+          <div>
+            <h2>My Applications</h2>
+            <p>Manage and monitor your job search.</p>
+          </div>
+          <span class="application-total" id="visible-count">0 applications</span>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input
+              type="search"
+              id="search-input"
+              placeholder="Search company or role..."
+              aria-label="Search applications"
+            >
+          </label>
+
+          <select id="status-filter" aria-label="Filter by application status">
+            <option value="All">All statuses</option>
+            <option value="Applied">Applied</option>
+            <option value="Interview">Interview</option>
+            <option value="Offer">Offer</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+
+          <select id="sort-select" aria-label="Sort applications">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="company">Company A–Z</option>
+          </select>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>COMPANY / ROLE</th>
+                <th>DATE APPLIED</th>
+                <th>STATUS</th>
+                <th>JOB LINK</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="applications-table-body"></tbody>
+          </table>
+
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon">📋</div>
+            <h3 id="empty-title">Your job search starts here</h3>
+            <p id="empty-description">Add your first application to start tracking your progress.</p>
+            <button class="primary-button" id="empty-add-btn">+ Add your first application</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>Built with HTML, CSS & JavaScript</p>
+        <p>Your data stays in this browser.</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Add/Edit Application Dialog -->
+  <dialog id="application-dialog" class="application-dialog">
+    <div class="dialog-header">
+      <div>
+        <p class="eyebrow">CAREER TRACKER</p>
+        <h2 id="dialog-title">Add application</h2>
+      </div>
+      <button type="button" id="close-dialog-btn" class="close-button" aria-label="Close form">×</button>
+    </div>
+
+    <form id="application-form">
+      <label for="company">Company name *</label>
+      <input id="company" name="company" type="text" maxlength="100" required placeholder="e.g. Google">
+
+      <label for="role">Job role *</label>
+      <input id="role" name="role" type="text" maxlength="100" required placeholder="e.g. Frontend Developer">
+
+      <label for="date-applied">Application date *</label>
+      <input id="date-applied" name="dateApplied" type="date" required>
+
+      <label for="status">Application status *</label>
+      <select id="status" name="status" required>
+        <option value="Applied">Applied</option>
+        <option value="Interview">Interview</option>
+        <option value="Offer">Offer</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+
+      <label for="job-link">Job posting URL (optional)</label>
+      <input id="job-link" name="jobLink" type="url" maxlength="1000" placeholder="https://example.com/jobs/123">
+
+      <div class="form-actions">
+        <button type="button" class="secondary-button" id="cancel-btn">Cancel</button>
+        <button type="submit" class="primary-button" id="save-btn">Save application</button>
+      </div>
+      <p class="form-message" id="form-message" role="alert"></p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
